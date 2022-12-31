@@ -241,27 +241,20 @@ SELECT *
 FROM client
 WHERE client_name LIKE '%Highschool%';
 
--- % = any # characters, _ = one character
-
--- Find any client's who are an LLC
-SELECT *
-FROM client
-WHERE client_name LIKE '%LLC';
-
--- Find any branch suppliers who are in the label business
-SELECT *
-FROM branch_supplier
-WHERE supplier_name LIKE '% Label%';
-
--- Find any employee born on the 10th day of the month
-SELECT *
+-- Find a list of employee and branch names
+SELECT employee.first_name AS Employee_Branch_Names
 FROM employee
-WHERE birth_day LIKE '_____10%';
+UNION
+SELECT branch.branch_name
+FROM branch;
 
--- Find any clients who are schools
-SELECT *
+-- Find a list of all clients & branch suppliers' names
+SELECT client.client_name AS Non-Employee_Entities, client.branch_id AS Branch_ID
 FROM client
-WHERE client_name LIKE '%Highschool%';
+UNION
+SELECT branch_supplier.supplier_name, branch_supplier.branch_id
+FROM branch_supplier;
+
 
 -- Add the extra branch
 INSERT INTO branch VALUES(4, "Buffalo", NULL, NULL);
